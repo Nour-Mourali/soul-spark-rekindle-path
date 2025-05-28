@@ -49,7 +49,7 @@ const Home: React.FC = () => {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
-              Hello, {user?.nickname || 'there'}! 👋
+              Hello, {user?.nickname || 'there '}! 👋
             </h1>
             <p className="text-gray-600">How are you feeling today?</p>
           </div>
