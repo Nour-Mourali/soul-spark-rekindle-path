@@ -15,13 +15,13 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen freud-section">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <div className="flex-1 flex flex-col items-center justify-center p-6">
         <div className="w-full max-w-md animate-fade-in">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
               <div className="relative">
-                <div className="w-16 h-16 bg-indigo-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Brain className="w-8 h-8 text-white" />
                 </div>
                 <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
@@ -29,13 +29,13 @@ const Login: React.FC = () => {
                 </div>
               </div>
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">
               Telepathy
             </h1>
             <p className="text-gray-600 text-lg">Your AI Mental Health Companion</p>
           </div>
           
-          <div className="freud-card mb-8">
+          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 mb-8">
             <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">
               Connect Securely
             </h2>
@@ -46,7 +46,7 @@ const Login: React.FC = () => {
             
             <Button 
               onClick={handleConnect}
-              className="w-full freud-button-primary py-4 text-lg font-medium"
+              className="w-full bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white py-4 text-lg font-medium rounded-2xl shadow-lg transition-all duration-300"
             >
               Connect with HashPack
             </Button>
