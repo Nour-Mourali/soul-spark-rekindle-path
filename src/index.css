@@ -14,11 +14,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 20%;
 
-    --primary: 260 80% 74%;
+    --primary: 238 75% 65%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 260 40% 96%;
-    --secondary-foreground: 260 60% 30%;
+    --secondary: 238 40% 96%;
+    --secondary-foreground: 238 60% 30%;
 
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
@@ -31,7 +31,7 @@
 
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 260 80% 74%;
+    --ring: 238 75% 65%;
 
     --radius: 1rem;
 
@@ -56,23 +56,35 @@
 }
 
 @layer components {
-  .mental-card {
-    @apply bg-white rounded-2xl p-4 shadow-sm border border-gray-100;
+  .telepathy-card {
+    @apply bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border-0;
   }
   
-  .mental-input {
-    @apply bg-mental-lightGray rounded-xl border-0 focus-visible:ring-2 focus-visible:ring-mental-purple;
+  .telepathy-input {
+    @apply bg-white/80 backdrop-blur-sm rounded-xl border-gray-200 focus-visible:ring-2 focus-visible:ring-indigo-500;
   }
 
-  .mental-slider-thumb {
-    @apply h-5 w-5 rounded-full border-2 border-white bg-mental-purple transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  .telepathy-slider-thumb {
+    @apply h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-indigo-500 to-purple-600 transition shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
   }
   
-  .mental-slider-track {
-    @apply h-2 rounded-full bg-mental-lightGray transition-colors;
+  .telepathy-slider-track {
+    @apply h-3 rounded-full bg-gray-200 transition-colors;
   }
   
-  .mental-slider-range {
-    @apply h-2 rounded-full bg-mental-purple transition-colors;
+  .telepathy-slider-range {
+    @apply h-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-colors;
+  }
+
+  .telepathy-gradient-text {
+    @apply bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent;
+  }
+
+  .telepathy-gradient-bg {
+    @apply bg-gradient-to-br from-indigo-50 via-white to-purple-50;
+  }
+
+  .telepathy-button {
+    @apply bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-2xl shadow-lg transition-all duration-300;
   }
 }
