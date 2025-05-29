@@ -5,44 +5,44 @@
 
 @layer base {
   :root {
-    --background: 240 45% 98%;
-    --foreground: 240 10% 20%;
+    --background: 248 246 242;
+    --foreground: 58 58 58;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 20%;
+    --card: 255 255 255;
+    --card-foreground: 58 58 58;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 20%;
+    --popover: 255 255 255;
+    --popover-foreground: 58 58 58;
 
-    --primary: 238 75% 65%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 122 155 118;
+    --primary-foreground: 255 255 255;
 
-    --secondary: 238 40% 96%;
-    --secondary-foreground: 238 60% 30%;
+    --secondary: 168 196 162;
+    --secondary-foreground: 58 58 58;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 243 241 237;
+    --muted-foreground: 139 111 71;
 
-    --accent: 240 5.9% 90%;
-    --accent-foreground: 240 5.9% 10%;
+    --accent: 212 131 74;
+    --accent-foreground: 255 255 255;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 238 75% 65%;
+    --border: 229 225 218;
+    --input: 229 225 218;
+    --ring: 122 155 118;
 
-    --radius: 1rem;
+    --radius: 1.25rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 248 246 242;
+    --sidebar-foreground: 58 58 58;
+    --sidebar-primary: 122 155 118;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 243 241 237;
+    --sidebar-accent-foreground: 58 58 58;
+    --sidebar-border: 229 225 218;
+    --sidebar-ring: 122 155 118;
   }
 
   * {
@@ -52,39 +52,62 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 }
 
 @layer components {
-  .telepathy-card {
-    @apply bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg border-0;
+  .wellness-card {
+    @apply bg-white rounded-2xl p-6 shadow-sm border border-gray-100;
   }
   
-  .telepathy-input {
-    @apply bg-white/80 backdrop-blur-sm rounded-xl border-gray-200 focus-visible:ring-2 focus-visible:ring-indigo-500;
+  .wellness-input {
+    @apply bg-white rounded-xl border-gray-200 focus-visible:ring-2 focus-visible:ring-primary;
   }
 
-  .telepathy-slider-thumb {
-    @apply h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-indigo-500 to-purple-600 transition shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
-  }
-  
-  .telepathy-slider-track {
-    @apply h-3 rounded-full bg-gray-200 transition-colors;
-  }
-  
-  .telepathy-slider-range {
-    @apply h-3 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-colors;
+  .wellness-button-primary {
+    @apply bg-primary hover:bg-primary/90 text-white rounded-xl shadow-sm transition-all duration-200;
   }
 
-  .telepathy-gradient-text {
-    @apply bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent;
+  .wellness-button-accent {
+    @apply bg-accent hover:bg-accent/90 text-white rounded-xl shadow-sm transition-all duration-200;
   }
 
-  .telepathy-gradient-bg {
-    @apply bg-gradient-to-br from-indigo-50 via-white to-purple-50;
+  .wellness-progress-ring {
+    @apply transition-all duration-500 ease-out;
   }
 
-  .telepathy-button {
-    @apply bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-2xl shadow-lg transition-all duration-300;
+  .wellness-gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
   }
+
+  .wellness-sage {
+    @apply text-primary;
+  }
+
+  .wellness-terracotta {
+    @apply text-accent;
+  }
+
+  .wellness-warm-bg {
+    @apply bg-gradient-to-br from-background via-white to-muted;
+  }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes soft-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.animate-gentle-pulse {
+  animation: gentle-pulse 3s infinite;
+}
+
+.animate-soft-bounce {
+  animation: soft-bounce 2s infinite;
 }

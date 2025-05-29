@@ -6,7 +6,7 @@ import { useChat } from '@/contexts/ChatContext';
 import { useNavigate } from 'react-router-dom';
 import ChatMessage from '@/components/ChatMessage';
 import ChatList from '@/components/ChatList';
-import { Send, ArrowLeft, MessageSquare } from 'lucide-react';
+import { Send, ArrowLeft, MessageSquare, Plus } from 'lucide-react';
 
 const Chat: React.FC = () => {
   const { currentSession, chatSessions, sendMessage, createNewSession, switchToSession, isLoading } = useChat();
@@ -43,26 +43,33 @@ const Chat: React.FC = () => {
 
   if (showChatList || !currentSession) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-mental-lightGray to-white p-6">
+      <div className="min-h-screen wellness-warm-bg p-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center mb-6">
             <Button
               variant="outline"
               size="icon"
               onClick={() => navigate('/home')}
-              className="mr-4"
+              className="mr-4 bg-white border-gray-200 hover:bg-gray-50 rounded-xl"
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-2xl font-bold text-gray-900">Mental Health Assistant</h1>
+            <h1 className="text-2xl font-semibold text-foreground">Mental Health Assistant</h1>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center text-mental-purple">
+          <Card className="wellness-card">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <CardTitle className="flex items-center text-primary">
                 <MessageSquare className="h-5 w-5 mr-2" />
                 Your Conversations
               </CardTitle>
+              <Button 
+                onClick={handleNewChat}
+                className="wellness-button-primary"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                New Chat
+              </Button>
             </CardHeader>
             <CardContent>
               <ChatList
@@ -83,20 +90,20 @@ const Chat: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-mental-lightGray to-white flex flex-col">
+    <div className="min-h-screen wellness-warm-bg flex flex-col">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4">
+      <div className="bg-white border-b border-gray-200 p-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <Button
               variant="outline"
               size="icon"
               onClick={() => setShowChatList(true)}
-              className="mr-4"
+              className="mr-4 bg-white border-gray-200 hover:bg-gray-50 rounded-xl"
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <h1 className="text-lg font-semibold text-gray-900">
+            <h1 className="text-lg font-semibold text-foreground">
               {currentSession.title}
             </h1>
           </div>
@@ -104,7 +111,7 @@ const Chat: React.FC = () => {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-4">
         <div className="max-w-4xl mx-auto space-y-4">
           {currentSession.messages.map((message) => (
             <ChatMessage
@@ -116,11 +123,11 @@ const Chat: React.FC = () => {
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-gray-100 rounded-2xl px-4 py-3 rounded-tl-none">
+              <div className="bg-white rounded-2xl px-4 py-3 rounded-tl-none shadow-sm border border-gray-100">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>
@@ -130,7 +137,7 @@ const Chat: React.FC = () => {
       </div>
 
       {/* Input */}
-      <div className="bg-white border-t border-gray-200 p-4">
+      <div className="bg-white border-t border-gray-200 p-4 shadow-sm">
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSendMessage} className="flex space-x-4">
             <input
@@ -138,13 +145,13 @@ const Chat: React.FC = () => {
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Type your message..."
-              className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mental-purple focus:border-transparent"
+              className="flex-1 p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent wellness-input"
               disabled={isLoading}
             />
             <Button
               type="submit"
               disabled={!inputMessage.trim() || isLoading}
-              className="bg-mental-purple hover:bg-mental-darkPurple text-white px-6"
+              className="wellness-button-primary px-6"
             >
               <Send className="h-4 w-4" />
             </Button>

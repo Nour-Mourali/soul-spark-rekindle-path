@@ -4,14 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useDatabase } from '@/contexts/DatabaseContext';
-import { Smile, Meh, Frown, Heart, Angry } from 'lucide-react';
 
-const moodOptions = [
-  { icon: Heart, label: 'Amazing', value: 5, color: 'text-green-500' },
-  { icon: Smile, label: 'Good', value: 4, color: 'text-blue-500' },
-  { icon: Meh, label: 'Okay', value: 3, color: 'text-yellow-500' },
-  { icon: Frown, label: 'Not Great', value: 2, color: 'text-orange-500' },
-  { icon: Angry, label: 'Difficult', value: 1, color: 'text-red-500' },
+const moodEmojis = [
+  { emoji: '😊', label: 'Amazing', value: 5, color: 'text-green-600' },
+  { emoji: '🙂', label: 'Good', value: 4, color: 'text-blue-600' },
+  { emoji: '😐', label: 'Okay', value: 3, color: 'text-yellow-600' },
+  { emoji: '🙁', label: 'Not Great', value: 2, color: 'text-orange-600' },
+  { emoji: '😢', label: 'Difficult', value: 1, color: 'text-red-600' },
 ];
 
 const MoodTracker: React.FC = () => {
@@ -34,21 +33,27 @@ const MoodTracker: React.FC = () => {
   };
 
   return (
-    <Card>
+    <Card className="wellness-card">
       <CardHeader>
-        <CardTitle className="text-mental-purple">How are you feeling?</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground">
+          How are you feeling?
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-5 gap-2">
-          {moodOptions.map((mood) => (
+          {moodEmojis.map((mood) => (
             <Button
               key={mood.value}
               variant={selectedMood === mood.value ? "default" : "outline"}
-              className="flex flex-col items-center p-4 h-auto"
+              className={`flex flex-col items-center p-4 h-auto rounded-xl ${
+                selectedMood === mood.value 
+                  ? 'wellness-button-primary' 
+                  : 'bg-white hover:bg-gray-50 border-gray-200'
+              }`}
               onClick={() => setSelectedMood(mood.value)}
             >
-              <mood.icon className={`h-6 w-6 mb-1 ${mood.color}`} />
-              <span className="text-xs">{mood.label}</span>
+              <span className="text-2xl mb-1">{mood.emoji}</span>
+              <span className="text-xs font-medium">{mood.label}</span>
             </Button>
           ))}
         </div>
@@ -58,12 +63,13 @@ const MoodTracker: React.FC = () => {
           value={note}
           onChange={(e) => setNote(e.target.value)}
           rows={3}
+          className="wellness-input"
         />
         
         <Button
           onClick={handleSubmit}
           disabled={selectedMood === null}
-          className="w-full bg-mental-purple hover:bg-mental-darkPurple"
+          className="w-full wellness-button-primary"
         >
           Log Mood
         </Button>

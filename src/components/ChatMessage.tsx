@@ -14,27 +14,27 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, isUser, timestamp })
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
       {!isUser && (
-        <Avatar className="h-8 w-8 mr-2">
-          <AvatarFallback className="bg-mental-purple text-white">AI</AvatarFallback>
+        <Avatar className="h-8 w-8 mr-3 mt-1">
+          <AvatarFallback className="bg-primary text-white text-sm">AI</AvatarFallback>
         </Avatar>
       )}
       <div>
         <div 
-          className={`rounded-2xl px-4 py-3 max-w-xs sm:max-w-md break-words ${
+          className={`rounded-2xl px-4 py-3 max-w-xs sm:max-w-md break-words shadow-sm ${
             isUser 
-              ? 'bg-mental-purple text-white rounded-tr-none' 
-              : 'bg-gray-100 text-gray-800 rounded-tl-none'
+              ? 'bg-primary text-white rounded-tr-none' 
+              : 'bg-white text-foreground rounded-tl-none border border-gray-100'
           }`}
         >
-          <p>{content}</p>
+          <p className="leading-relaxed">{content}</p>
         </div>
-        <p className={`text-xs text-gray-500 mt-1 ${isUser ? 'text-right' : 'text-left'}`}>
+        <p className={`text-xs text-muted-foreground mt-1 ${isUser ? 'text-right' : 'text-left'}`}>
           {formattedTime}
         </p>
       </div>
       {isUser && (
-        <Avatar className="h-8 w-8 ml-2">
-          <AvatarFallback className="bg-blue-500 text-white">ME</AvatarFallback>
+        <Avatar className="h-8 w-8 ml-3 mt-1">
+          <AvatarFallback className="bg-accent text-white text-sm">ME</AvatarFallback>
         </Avatar>
       )}
     </div>

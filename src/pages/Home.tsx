@@ -15,7 +15,8 @@ import BreathingExercise from '@/components/BreathingExercise';
 import WeeklyChart from '@/components/WeeklyChart';
 import GratitudeJournal from '@/components/GratitudeJournal';
 import WellnessTips from '@/components/WellnessTips';
-import { MessageSquare, Settings, Bell, Database, Brain, Sparkles } from 'lucide-react';
+import WellnessProgressRing from '@/components/WellnessProgressRing';
+import { MessageSquare, Settings, Bell, Database, Heart, Sparkles, Activity, Sun } from 'lucide-react';
 
 const Home: React.FC = () => {
   const { user } = useAuth();
@@ -41,21 +42,26 @@ const Home: React.FC = () => {
     }, 'mood');
   };
 
+  // Calculate overall wellness score
+  const wellnessScore = Math.round(
+    ((healthData.energy + healthData.happiness + healthData.productivity + (5 - healthData.stress)) / 4) * 20
+  );
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6 pb-20">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen wellness-warm-bg p-4 pb-20">
+      <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start mb-8">
           <div className="space-y-2">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center">
+                <Heart className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  Welcome back, {user?.nickname || 'there'}! 
+                <h1 className="text-2xl font-semibold text-foreground">
+                  Good morning, {user?.nickname || 'there'}!
                 </h1>
-                <p className="text-gray-600 text-lg">How are you feeling today?</p>
+                <p className="text-muted-foreground">How are you feeling today?</p>
               </div>
             </div>
           </div>
@@ -83,19 +89,55 @@ const Home: React.FC = () => {
           </div>
         </div>
 
+        {/* Wellness Score Card */}
+        <Card className="wellness-card">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center space-x-4">
+                  <WellnessProgressRing
+                    value={wellnessScore}
+                    size={100}
+                    strokeWidth={8}
+                    color="hsl(var(--primary))"
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl font-bold wellness-sage">{wellnessScore}</div>
+                      <div className="text-xs text-muted-foreground">Score</div>
+                    </div>
+                  </WellnessProgressRing>
+                  <div className="space-y-1">
+                    <h3 className="text-lg font-semibold text-foreground">Wellness Score</h3>
+                    <p className="text-sm text-muted-foreground">Based on your daily check-ins</p>
+                    <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                      {wellnessScore >= 80 ? 'Excellent' : wellnessScore >= 60 ? 'Good' : 'Improving'}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+              <div className="text-right">
+                <Button
+                  onClick={() => navigate('/dashboard')}
+                  className="wellness-button-primary"
+                >
+                  View Details
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Database Status */}
-        <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg rounded-2xl">
+        <Card className="wellness-card">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center">
-                  <Database className="h-5 w-5 text-white" />
+                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                  <Database className="h-5 w-5 text-green-600" />
                 </div>
                 <div>
-                  <span className="font-semibold text-gray-800">
-                    Database Status
-                  </span>
-                  <p className="text-sm text-gray-600">
+                  <span className="font-medium text-foreground">Database Status</span>
+                  <p className="text-sm text-muted-foreground">
                     {isRealmReady ? 'Connected & Syncing' : 'Offline Mode'}
                   </p>
                 </div>
@@ -107,21 +149,72 @@ const Home: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Health Metrics */}
-        <HealthMetrics
-          heartRate={healthData.heartRate}
-          steps={healthData.steps}
-          energy={healthData.energy}
-          happiness={healthData.happiness}
-        />
+        {/* Quick Health Metrics */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="wellness-card">
+            <CardContent className="pt-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+                  <Heart className="h-5 w-5 text-red-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Heart Rate</p>
+                  <p className="text-lg font-semibold">{healthData.heartRate} bpm</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card className="wellness-card">
+            <CardContent className="pt-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                  <Activity className="h-5 w-5 text-blue-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Steps</p>
+                  <p className="text-lg font-semibold">{healthData.steps.toLocaleString()}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Card className="wellness-card">
+            <CardContent className="pt-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center">
+                  <Sun className="h-5 w-5 text-yellow-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Energy</p>
+                  <p className="text-lg font-semibold">{healthData.energy}/5</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="wellness-card">
+            <CardContent className="pt-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                  <Heart className="h-5 w-5 text-green-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-muted-foreground">Happiness</p>
+                  <p className="text-lg font-semibold">{healthData.happiness}/5</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {/* Status Check-in */}
-            <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-lg rounded-2xl">
+            <Card className="wellness-card">
               <CardHeader>
-                <CardTitle className="text-xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                <CardTitle className="text-lg font-semibold text-foreground">
                   Daily Check-in
                 </CardTitle>
               </CardHeader>
@@ -158,7 +251,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* Right Column */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             <WeeklyChart />
             <BreathingExercise />
             <WellnessTips />
@@ -166,22 +259,22 @@ const Home: React.FC = () => {
         </div>
 
         {/* AI Chat Assistant */}
-        <Card className="bg-gradient-to-r from-indigo-500 to-purple-600 border-0 shadow-xl rounded-3xl text-white">
+        <Card className="wellness-card">
           <CardContent className="p-8 text-center">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center">
                 <MessageSquare className="h-8 w-8 text-white" />
               </div>
-              <Sparkles className="w-6 h-6 text-yellow-300 ml-2" />
+              <Sparkles className="w-6 h-6 text-accent ml-2" />
             </div>
-            <h3 className="text-2xl font-bold mb-3">Chat with Telepathy AI</h3>
-            <p className="text-indigo-100 mb-6 text-lg leading-relaxed">
+            <h3 className="text-xl font-semibold mb-3 text-foreground">Chat with Telepathy AI</h3>
+            <p className="text-muted-foreground mb-6 leading-relaxed">
               Your personal AI therapist is ready to listen, understand, and guide you 
               through your mental wellness journey.
             </p>
             <Button 
               onClick={() => navigate('/chat')}
-              className="bg-white text-indigo-600 hover:bg-gray-50 px-8 py-3 text-lg font-semibold rounded-2xl shadow-lg transition-all duration-300"
+              className="wellness-button-primary px-8 py-3 text-lg"
             >
               Start Conversation
             </Button>
